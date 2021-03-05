@@ -51,7 +51,7 @@ def bot():
     if 'report of' in incoming_msg:
         # return a quote
         sen,city =incoming_msg.split('report of ')
-        url="http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=dfce588ebed0b47d8786f773cd3175d9"
+        url="http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=API_KEY"
         r = requests.get(url)
         if r.status_code == 200:
             data = r.json()
