@@ -13,45 +13,37 @@ def bot():
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
     msg = resp.message()
-    responded = False
+    flag = False
     if 'joke' in incoming_msg:
         # return a joke
         r = requests.get('https://official-joke-api.appspot.com/random_joke')
         if r.status_code == 200:
             data = r.json()
-            quote = f'{data["setup"]} \n("{data["punchline"]}")'
+            quote = f'\n {data["setup"]} \n("{data["punchline"]}")'
         else:
             quote = 'I could not retrieve a joke at this time, sorry.'
         msg.body(quote)
-        responded = True  
-    if 'bored' in incoming_msg:
-        # return a hobby
-        r = requests.get('http://www.boredapi.com/api/activity/')
-        if r.status_code == 200:
-            data = r.json()
-            quote = f'{data["activity"]} \n *Type* -("{data["type"]}")'
-        else:
-            quote = 'I could not retrieve a joke at this time, sorry.'
-        msg.body(quote)
-        responded = True       
-    if 'quote' in incoming_msg:
-        # return a quote
-        r = requests.get('https://api.quotable.io/random')
-        if r.status_code == 200:
-            data = r.json()
-            quote = f' "{data["content"]}" \n- {data["author"]}'
-        else:
-            quote = 'I could not retrieve a quote at this time, sorry.'
-        msg.body(quote)
-        responded = True
-    if 'cat' in incoming_msg:
+        flag = True 
+      
+      
+    if 'pic' in incoming_msg:
         # return a cat pic
         msg.media('https://cataas.com/cat')
-        responded = True
+        flag = True 
+    if 'dice' in incoming_msg:
+        # return a quote
+        r = requests.get('http://roll.diceapi.com/json/d6')
+        if r.status_code == 200:
+            data = r.json()
+            quote = f'\n"{data["dice"][0]["value"]}"'
+        else:
+            quote = 'I could not roll a dice at this time, sorry.'
+        msg.body(quote)
+        flag = True
     if 'report of' in incoming_msg:
         # return a quote
         sen,city =incoming_msg.split('report of ')
-        url="http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=API_KEY"
+        url="http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=dfce588ebed0b47d8786f773cd3175d9"
         r = requests.get(url)
         if r.status_code == 200:
             data = r.json()
@@ -63,12 +55,13 @@ def bot():
     if 'meme' in incoming_msg:
         # return a quote
         sen,meme =incoming_msg.split('meme ')
-        name,gender=meme.split(' ')
+        name,gender=meme.split(',')
         url_p="https://belikebill.ga/billgen-API.php?default=1&name="+name+"&sex="+gender
         msg.media(url_p)
-        responded = True
-    if not responded:
-        msg.body('I only know about jokes, quotes and cats, I am learning and growing day by day \n- HEALTHCODE:)')
+        responded = True        
+             
+    if not flag:
+        msg.body('Hey I am learning and growing day by day soon I will be capable to answer that \n- *Be a nerd BOT*')
     return str(resp)
 
 
