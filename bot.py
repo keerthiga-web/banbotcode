@@ -56,9 +56,10 @@ def bot():
         # return a quote
         sen,meme =incoming_msg.split('meme ')
         name,gender=meme.split(',')
-        url_p="https://belikebill.ga/billgen-API.php?default=1&name="+name+"&sex="+gender
+        x = name.replace(" ", "%20")
+        url_p="https://belikebill.ga/billgen-API.php?default=1&name="+x+"&sex="+gender
         msg.media(url_p)
-        flag = True        
+        flag = True   
              
     if not flag:
         msg.body('Hey I am learning and growing day by day soon I will be capable to answer that \n- *Be a nerd BOT*')
