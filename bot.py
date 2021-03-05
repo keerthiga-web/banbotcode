@@ -51,14 +51,14 @@ def bot():
         else:
             quote = 'try later.'
         msg.body(quote)
-        responded = True      
+        flag = True      
     if 'meme' in incoming_msg:
         # return a quote
         sen,meme =incoming_msg.split('meme ')
         name,gender=meme.split(',')
         url_p="https://belikebill.ga/billgen-API.php?default=1&name="+name+"&sex="+gender
         msg.media(url_p)
-        responded = True        
+        flag = True        
              
     if not flag:
         msg.body('Hey I am learning and growing day by day soon I will be capable to answer that \n- *Be a nerd BOT*')
